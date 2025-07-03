@@ -2,53 +2,91 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Contador de Curiosos 👀</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
+  <title>Contador de Visitas</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
     body {
-      font-family: 'Orbitron', monospace;
-      background: linear-gradient(135deg, #1f4037, #99f2c8);
-      color: #fff;
-      text-align: center;
-      padding: 50px;
-      min-height: 100vh;
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f6f7;
+      color: #222;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
     }
+
     h1 {
-      font-size: 4rem;
-      margin-bottom: 0.5em;
-      text-shadow: 2px 2px 8px #000;
-    }
-    .local, .global {
+      font-weight: 700;
       font-size: 2.5rem;
-      margin: 0.5em 0;
-      text-shadow: 1px 1px 4px #000;
+      margin-bottom: 0.5rem;
+      color: #333;
     }
+
+    .counter {
+      background-color: #fff;
+      padding: 30px 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 320px;
+      max-width: 90vw;
+    }
+
+    .count-label {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 0.3rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .count-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0073e6;
+      margin-bottom: 20px;
+    }
+
     button {
-      margin-top: 30px;
-      background: #fff;
-      color: #1f4037;
+      background-color: #0073e6;
       border: none;
-      border-radius: 30px;
-      padding: 15px 40px;
-      font-size: 1.5rem;
+      color: #fff;
+      font-weight: 700;
+      padding: 12px 30px;
+      border-radius: 5px;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-      transition: background-color 0.3s ease, color 0.3s ease;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
     }
+
     button:hover {
-      background: #99f2c8;
-      color: #1f4037;
+      background-color: #005bb5;
     }
   </style>
 </head>
 <body>
-  <h1>Hola curioso 👀</h1>
-  <div class="local" id="local">Cargando visitas tuyas...</div>
-  <div class="global" id="global">Cargando visitas globales...</div>
-  <button onclick="location.reload()">Refrescar y ver contador ↻</button>
+
+  <div class="counter">
+    <h1>Contador de Visitas</h1>
+
+    <div>
+      <div class="count-label">Tus visitas</div>
+      <div class="count-number" id="local">Cargando...</div>
+    </div>
+
+    <div>
+      <div class="count-label">Visitas globales</div>
+      <div class="count-number" id="global">Cargando...</div>
+    </div>
+
+    <button onclick="location.reload()">Actualizar</button>
+  </div>
 
   <script>
     // Contador local
@@ -56,15 +94,15 @@
     let visitas = localStorage.getItem(key);
     visitas = visitas ? parseInt(visitas) + 1 : 1;
     localStorage.setItem(key, visitas);
-    document.getElementById('local').textContent = `Vos entraste ${visitas} veces 🫣`;
+    document.getElementById('local').textContent = visitas;
 
     // JSONP para contador global
     function jsonpCallback(data) {
-      document.getElementById('global').textContent = data;
+      const match = data.match(/\d+/);
+      document.getElementById('global').textContent = match ? match[0] : data;
     }
   </script>
 
-  <!-- Cambiá la URL de abajo por la de tu Apps Script desplegado -->
   <script src="https://script.google.com/macros/s/AKfycbxsejxHjnvkHjv_tvspgSljtYrZ1VHDYamqtu58ROIalCGSVT9mkSWDF4KMC3KorFbM-w/exec?callback=jsonpCallback"></script>
 
 </body>
