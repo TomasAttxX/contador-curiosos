@@ -2,13 +2,12 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Contador de Curiosos</title>
+  <title>Contador de Curiosos Global</title>
   <style>
     body {
       text-align: center;
       margin-top: 100px;
       font-family: sans-serif;
-      background-color: #f5f5f5;
     }
     .local {
       font-size: 24px;
@@ -21,20 +20,19 @@
   </style>
 </head>
 <body>
-  <h1>Hola curioso 👀</h1>
   <div class="local" id="local">Cargando visitas tuyas...</div>
   <div class="global" id="global">Cargando visitas globales...</div>
 
   <script>
-    // Contador local (por usuario)
+    // Contador individual (localStorage)
     const key = 'visitas_curioso';
     let visitas = localStorage.getItem(key);
     visitas = visitas ? parseInt(visitas) + 1 : 1;
     localStorage.setItem(key, visitas);
     document.getElementById('local').textContent = `Vos entraste ${visitas} veces 🫣`;
 
-    // Contador global (Google Sheets)
-    fetch('https://script.google.com/macros/s/AKfycbxF0Ti4apIllaQsasDiTwVXBoM6QhiuW9avaNGW5bSdDj9or45gDjPd3NxMJ1sqaEh_sw/exec') // ← CAMBIÁ ESTA URL
+    // Contador global desde Google Sheets
+    fetch('https://script.google.com/macros/s/AKfycbzzmKjFtUnhGLsvLt00FK-55GSjYlx2k6misdazuJ3qzQrF6olqHbMbTDjxtCqquyqNXg/exec') // REEMPLAZÁ ESTA URL
       .then(response => response.text())
       .then(data => {
         document.getElementById('global').textContent = data;
